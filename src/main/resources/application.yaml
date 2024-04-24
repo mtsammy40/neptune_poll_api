@@ -1,0 +1,26 @@
+spring:
+  r2dbc:
+    password: ${POSTGRES_PASS:pass}
+    username: ${POSTGRES_USER:user}
+    url: ${POSTGRES_URI:jdbc:postgresql://127.0.0.1:5432/payments}
+axon:
+  axonserver:
+    servers: ${AXON_SERVERS:localhost:8024}
+  eventhandling:
+    processors:
+      poll:
+        mode: subscribing
+        source: eventStore
+  serializer:
+    events: jackson
+    messages: jackson
+    general: jackson
+logging:
+  level:
+    io:
+      r2dbc:
+        postgresql: debug
+    org:
+      springframework:
+          data:
+            r2dbc: debug
