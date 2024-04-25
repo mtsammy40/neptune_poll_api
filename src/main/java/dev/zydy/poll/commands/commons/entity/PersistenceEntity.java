@@ -1,9 +1,11 @@
 package dev.zydy.poll.commands.commons.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -17,8 +19,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@Slf4j
 public class PersistenceEntity implements Persistable<UUID> {
     @Transient
+    @Builder.Default
     private boolean isPersisted = true;
 
     @Id
@@ -30,6 +34,7 @@ public class PersistenceEntity implements Persistable<UUID> {
 
     @Override
     public boolean isNew() {
+        log.debug("Checking if entity is new: {} - ID : {} - Class : {}", !isPersisted, id, getClass().getSimpleName());
         return !isPersisted;
     }
 }
